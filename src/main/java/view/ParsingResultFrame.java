@@ -60,6 +60,8 @@ public class ParsingResultFrame extends JFrame {
 
         parsedQueryTextArea.setEditable(false);
         parsedQueryTextArea.setBackground(new Color(241, 240, 240));
+        parsedQueryTextArea.setFont(new Font("Times New Roman",Font.ROMAN_BASELINE,24));
+
         parsedQueryTextArea.setColumns(20);
         parsedQueryTextArea.setRows(5);
         jScrollPane1.setViewportView(parsedQueryTextArea);

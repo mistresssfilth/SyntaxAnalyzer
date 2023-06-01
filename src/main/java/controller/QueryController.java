@@ -17,25 +17,33 @@ public class QueryController {
         this.validationModel = validationModel;
     }
 
-    public void SelectQuery(String query){
+    public String SelectQuery(String query){
+        StringBuilder stringBuilder = new StringBuilder();
         try {
             if (validationModel.isValid() == "VALID"){
                 Statement statement = connector.getDbConnection().createStatement();
                 ResultSet resultSet = statement.executeQuery(query);
                 ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
                 int colCount = resultSetMetaData.getColumnCount();
+                for (int i = 1; i <= colCount; i++){
+                    stringBuilder.append(resultSetMetaData.getColumnName(i));
+                    stringBuilder.append("\t");
+                }
+                stringBuilder.append("\n");
                 while (resultSet.next()) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (int i = 1; i <= colCount; i++){
+
+                    for (int i = 1; i <= colCount; i++) {
                         stringBuilder.append(resultSet.getString(i));
-                        stringBuilder.append(" ");
+                        stringBuilder.append("\t");
 
                     }
-                    System.out.println(stringBuilder);
+                    stringBuilder.append("\n");
                 }
+
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return stringBuilder.toString();
     }
 }

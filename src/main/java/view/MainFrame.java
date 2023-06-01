@@ -8,7 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.ArrayList;
+
 
 public class MainFrame extends JFrame {
     ParseModel parseModel;
@@ -40,6 +42,8 @@ public class MainFrame extends JFrame {
 
         queryTextArea.setColumns(20);
         queryTextArea.setRows(5);
+        queryTextArea.setFont(new Font("Times New Roman",Font.ROMAN_BASELINE,24));
+
         jScrollPane.setViewportView(queryTextArea);
 
         parseButton.setText("Parse");
@@ -102,14 +106,28 @@ public class MainFrame extends JFrame {
         ParsingResultFrame parsingResultFrame = new ParsingResultFrame(parseModel);
         validationModel.setTables(parseModel.getTables());
         validationModel.validation();
-        isValid.setText(validationModel.isValid());
         if (validationModel.isValid() == "VALID"){
+            isValid.setText(validationModel.isValid());
+
+            parseModel.setTables(new ArrayList<>());
+            parsingResultFrame.setVisible(true);
+
             QueryController queryController = new QueryController(validationModel);
-            queryController.SelectQuery(parseModel.getQuery());
+            String query = queryController.SelectQuery(parseModel.getQuery());
+
+            ResultSelectFrame resultSelectFrame = new ResultSelectFrame(query);
+            resultSelectFrame.setVisible(true);
+
+
+
+
+        }
+        else{
+            isValid.setText(validationModel.isValid()  + "\nThe error of word: " + validationModel.getPosError());
         }
         parsingResultFrame.setDefaultCloseOperation(HIDE_ON_CLOSE);
-        parseModel.setTables(new ArrayList<>());
-        parsingResultFrame.setVisible(true);
+
+
     }
     private void clearButtonAction(ActionEvent event){
         queryTextArea.setText("");

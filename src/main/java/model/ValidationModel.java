@@ -7,6 +7,7 @@ public final class ValidationModel {
     private ArrayList<String> token;
     private boolean isValid = false;
     private ArrayList<TableFormat> tables = new ArrayList<>();
+    private String posError = "";
 
     public ValidationModel() {
     }
@@ -29,6 +30,7 @@ public final class ValidationModel {
         }
         else return "NOT VALID";
     }
+
     public void validation(){
         getStringToken();
         isValid = false;
@@ -53,8 +55,9 @@ public final class ValidationModel {
                         stack.push("A");
                         stack.push("15");
                     }
-                    else
+                    else {
                         stack.push("ERROR");
+                        posError = tables.get(cc).getText();                    }
                     break;
                 case "D":
                     stack.pop();
@@ -75,7 +78,7 @@ public final class ValidationModel {
                         cc++;
                     } else {
                         stack.push("ERROR");
-                    }
+                        posError = tables.get(cc).getText();                    }
                     break;
                 case "25":
                     if (token.get(cc).equals("25")) {
@@ -83,7 +86,7 @@ public final class ValidationModel {
                         cc++;
                     } else {
                         stack.push("ERROR");
-                    }
+                        posError = tables.get(cc).getText();                    }
                     break;
                 case "A":
                     if (token.get(cc).equals("2")) {
@@ -103,7 +106,7 @@ public final class ValidationModel {
                         stack.push("12");
                     } else {
                         stack.push("ERROR");
-                    }
+                        posError = tables.get(cc).getText();                    }
                     break;
                 case "F":
                     if (token.get(cc).equals("5")) {
@@ -120,7 +123,7 @@ public final class ValidationModel {
                         cc++;
                     } else {
                         stack.push("ERROR");
-                    }
+                        posError = tables.get(cc).getText();                    }
                     break;
                 case "12":
                     if (token.get(cc).equals("12")) {
@@ -128,6 +131,7 @@ public final class ValidationModel {
                         cc++;
                     } else {
                         stack.push("ERROR");
+                        System.out.println(cc);
                     }
                     break;
                 case "3":
@@ -136,7 +140,7 @@ public final class ValidationModel {
                         cc++;
                     } else {
                         stack.push("ERROR");
-                    }
+                        posError = tables.get(cc).getText();                    }
                     break;
                 case "5":
                     if (token.get(cc).equals("5")) {
@@ -144,7 +148,7 @@ public final class ValidationModel {
                         cc++;
                     } else {
                         stack.push("ERROR");
-                    }
+                        posError = tables.get(cc).getText();                    }
                     break;
                 case "B":
                     if (token.get(cc).equals("16")) {
@@ -152,6 +156,9 @@ public final class ValidationModel {
                         stack.push("G");
                         stack.push("16");
                     }
+                    else {
+                        stack.push("ERROR");
+                        posError = tables.get(cc).getText();                    }
                     break;
                 case "G":
                     if (token.get(cc).equals("12")) {
@@ -160,6 +167,7 @@ public final class ValidationModel {
                         stack.push("12");
                     } else {
                         stack.push("ERROR");
+                        posError = tables.get(cc).getText();
                     }
                     break;
                 case "H":
@@ -177,6 +185,7 @@ public final class ValidationModel {
                         cc++;
                     } else {
                         stack.push("ERROR");
+                        posError = tables.get(cc).getText();
                     }
                     break;
                 default:
@@ -189,6 +198,11 @@ public final class ValidationModel {
                 state = "f";
                 isValid = true;
             }
+
         }
+    }
+
+    public String getPosError() {
+        return posError;
     }
 }

@@ -7,6 +7,7 @@ public final class ParseModel {
     private String word = "";
     private ArrayList<TableFormat> tables = new ArrayList<>();
 
+
     public ParseModel() {
     }
 

@@ -1,6 +1,7 @@
 import model.ParseModel;
 import model.ValidationModel;
 import view.MainFrame;
+import view.ResultSelectFrame;
 
 public class Main {
     public static void main(String[] args) {
